@@ -130,9 +130,6 @@ driver.find_element(By.CLASS_NAME, "//*[@id='kt_body']/span/span/span[1]/input")
 # Pause to let you solve CAPTCHA manually
 input("Please solve the CAPTCHA manually in the browser, then press Enter here to continue...")
 
-# select by value 
-#select.select_by_value('1')
-time.sleep(10)
 
 
 time.sleep(50) 
