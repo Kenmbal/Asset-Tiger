@@ -64,32 +64,32 @@ with open('assets.csv', 'r') as file:
 """
 ITEM NO. 1
 """
-driver.find_element(By.ID, "query").send_keys("TEST001")
+driver.find_element(By.ID, "query").send_keys("OEQ00158")
 driver.find_element(By.XPATH, "//*[@id='btn_query_search']").click()
 time.sleep(1)
 
-driver.find_element(By.XPATH, "//*[@id='All_assets']/tbody/tr/td[1]/label/span[1]").click() 
+driver.find_element(By.XPATH, "//*[@id='All_assets']/tbody/tr/td[1]/label/span[1]").click()
 driver.find_element(By.ID, 'query').clear()
 
 """
 ITEM NO. 2
 """
-driver.find_element(By.ID, "query").send_keys("TEST002")
-driver.find_element(By.XPATH, "//*[@id='btn_query_search']").click()
-time.sleep(1)
+#driver.find_element(By.ID, "query").send_keys("TEST002")
+#driver.find_element(By.XPATH, "//*[@id='btn_query_search']").click()
+#time.sleep(1)
 
-driver.find_element(By.XPATH, "//*[@id='All_assets']/tbody/tr/td[1]/label/span[1]").click()
-driver.find_element(By.ID, 'query').clear()
+#driver.find_element(By.XPATH, "//*[@id='All_assets']/tbody/tr/td[1]/label/span[1]").click()
+#driver.find_element(By.ID, 'query').clear()
 
 """
 ITEM NO. 3
 """
 
-driver.find_element(By.ID, "query").send_keys("TEST003")
-driver.find_element(By.XPATH, "//*[@id='btn_query_search']").click()
-time.sleep(1)
+#driver.find_element(By.ID, "query").send_keys("TEST003")
+#driver.find_element(By.XPATH, "//*[@id='btn_query_search']").click()
+#time.sleep(1)
 
-driver.find_element(By.XPATH, "//*[@id='All_assets']/tbody/tr/td[1]/label/span[1]").click()
+#driver.find_element(By.XPATH, "//*[@id='All_assets']/tbody/tr/td[1]/label/span[1]").click()
 
 """
 Add item to the list
@@ -103,33 +103,52 @@ WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.XPATH, "/
 driver.find_element(By.XPATH, "//*[@id='pending_assets']/thead/tr/th[1]").click()
 
 """
+Select a person 
+"""
+#WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located((By.XPATH, "//*[@id='select2-PersonId-container']")))
+driver.find_element(By.XPATH, "//*[@id='select2-PersonId-container']").click()
+person = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".select2-search__field")))
+person.send_keys("Test Man") 
+time.sleep(5)
+
+enter = driver.find_element(By.XPATH, "//*[@id='kt_body']/span/span/span[1]/input")
+enter.send_keys(Keys.ENTER)
+time.sleep(5)
+
+"""
 Select site for employee
 """
-WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='SiteId']")))
+WebDriverWait(driver, 15).until(EC.presence_of_all_elements_located((By.XPATH, "//*[@id='SiteId']")))
 site = driver.find_element(By.XPATH, "//*[@id='SiteId']")
 site.click()
 
 """
 Select the Vinson
 """
-WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='SiteId']/option[2]")))
+WebDriverWait(driver, 15).until(EC.presence_of_all_elements_located((By.XPATH, "//*[@id='SiteId']/option[2]")))
 site1 = driver.find_element(By.XPATH, "//*[@id='SiteId']/option[2]")
 site1.click()
 
-WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='formCheckOut']/div[1]/div[5]/div[1]/div[3]/div/div/span/span[1]/span")))
-driver.find_element(By.XPATH, "//*[@id='formCheckOut']/div[1]/div[5]/div[1]/div[3]/div/div/span/span[1]/span").click()
-time.sleep(10)
+"""
+Send Email
+"""
+WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, "//*[@id='formCheckOut']/div[1]/div[5]/div[2]/div[7]/div[1]/label")))
+driver.find_element(By.XPATH, "//*[@id='formCheckOut']/div[1]/div[5]/div[2]/div[7]/div[1]/label").click()
 
-WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, "//*[@id='select2-PersonId-container']")))
-driver.find_element(By.XPATH, "//*[@id='select2-PersonId-container'']").click()
+"""
+Save Email if the user doesnt have email
 
-WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "//*[@id='kt_body']/span/span/span[1]/input")))
-driver.find_element(By.CLASS_NAME, "//*[@id='kt_body']/span/span/span[1]/input").send_keys("TEST MAN")
-
+email = driver.find_element(By.XPATH, "//*[@id='PersonEmail']")
+email.send_keys("TestMan@gmail.com") 
+driver.find_element(By.ID, "updateEmail").click()
+"""
 
 # Pause to let you solve CAPTCHA manually
 input("Please solve the CAPTCHA manually in the browser, then press Enter here to continue...")
 
+driver.find_element(By.ID, "SubmitBtn").click()
+
+time.sleep(10)
 
 
 time.sleep(50) 
