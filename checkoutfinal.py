@@ -82,15 +82,26 @@ person_input.send_keys(Keys.ENTER)
 time.sleep(2)
 
 # Select site
-WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "SiteId")))
-site_select = Select(driver.find_element(By.ID, "SiteId"))
-site_select.select_by_visible_text(site)
+WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//*[@id='SiteId']")))
+site_select = (driver.find_element(By.XPATH, "//*[@id='SiteId']")).click()
+time.sleep(2)
 
+WebDriverWait(driver, 5).until(
+    EC.presence_of_element_located((By.XPATH, "//*[@id='SiteId']/option[2]"))
+)
+driver.find_element(By.XPATH, "//*[@id='SiteId']/option[2]").click()
+
+#Click the button send email
+WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, "//*[@id='formCheckOut']/div[1]/div[5]/div[2]/div[7]/div[1]/label")))
+driver.find_element(By.XPATH, "//*[@id='formCheckOut']/div[1]/div[5]/div[2]/div[7]/div[1]/label").click()
+
+"""
 # Update email
 email_field = driver.find_element(By.XPATH, "//*[@id='PersonEmail']")
 email_field.clear()
 email_field.send_keys(person_email)
 driver.find_element(By.ID, "updateEmail").click()
+"""
 
 # CAPTCHA pause
 input("Please solve CAPTCHA in the browser, then press Enter here to continue...")
@@ -101,3 +112,7 @@ print("✅ Submitted all assets in bulk.")
 
 time.sleep(10)
 driver.quit()
+
+
+
+#Bug:You should enter the site for the employee after assigning to teammate
