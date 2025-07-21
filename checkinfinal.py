@@ -70,13 +70,32 @@ WebDriverWait(driver, 5).until(
     EC.presence_of_element_located((By.XPATH, "//*[@id='pending_assets']/thead/tr/th[1]"))
 )
 driver.find_element(By.XPATH, "//*[@id='pending_assets']/thead/tr/th[1]").click()
-
+time.sleep(5)
 
 # Select site
-WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "SiteId")))
-site_select = Select(driver.find_element(By.ID, "SiteId"))
-site_select.select_by_visible_text(site)
+WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "newSiteId")))
+site_select = (driver.find_element(By.ID, "newSiteId")).click()
+time.sleep(2)
 
-time.sleep(10)
+WebDriverWait(driver, 5).until(
+    EC.presence_of_element_located((By.XPATH, "//*[@id='newSiteId']/option[2]"))
+)
+driver.find_element(By.XPATH, "//*[@id='newSiteId']/option[2]").click()
+
+#Click the button send email
+WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, "//*[@id='formBulkCheckIn']/div[1]/div[5]/div[1]/div[5]/div[1]/label/span")))
+driver.find_element(By.XPATH, "//*[@id='formBulkCheckIn']/div[1]/div[5]/div[1]/div[5]/div[1]/label/span").click()
+
+
+# CAPTCHA pause
+input("Please solve CAPTCHA in the browser, then press Enter here to continue...")
+
+# Submit once for all assets
+driver.find_element(By.ID, "SubmitBtn").click()
+print("✅ Submitted all assets in bulk.")
+
+time.sleep(20)
+driver.quit()
+
 
 
